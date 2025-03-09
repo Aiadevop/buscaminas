@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Buscaminas</title>
+</head>
+
+<body>
+    <div
+        style="display: flex; flex-direction: column; justify-content: start; align-items: center; height: 100vh; background-image: url('https://res.cloudinary.com/dguhnftxe/image/upload/v1741434440/buscaminas/buscaminastrans_xdd1lb.png');">
+        <h1 style="font-family: 'system-ui','Courier New', monospace; font-weight: 300;">Buscaminas</h1>
+        <button id="reiniciar-btn" style="margin-bottom: 2rem; background-color: azure; border-radius: 0.5rem;"
+            onclick="restartGame()">
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <img src="https://cdn-icons-png.flaticon.com/128/8066/8066314.png" alt="Boom" width="30">
+            </div>
+        </button>
+        <div
+            style="display: flex; justify-content: center; align-items: center; padding: 1rem; margin-bottom: 2rem; background-color: azure; border-radius: 0.5rem;">
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <form id="config-form" method="POST"
+                    style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 1rem;">
+                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; ">
+                        <label for="rows"
+                            style="font-family: 'system-ui','Courier New', monospace; font-weight: 200;">Tamaño:</label>
+                        <input type="number" id="rows" name="rows" min="1" value="5" max="10" required 
+                            style="border-radius: 0.5rem; border-color: goldenrod; max-width: 2rem;">
+                    </div>
+                    <!-- <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; ">
+                        <label for="cols"
+                            style="font-family: 'system-ui','Courier New', monospace; font-weight: 200;">Columnas:</label>
+                        <input type="number" id="cols" name="cols" min="1" value="5" max="10" required
+                            style="border-radius: 0.5rem; border-color: goldenrod; max-width: 2rem;">
+                    </div> -->
+                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; ">
+                        <label for="bombs"
+                            style="font-family: 'system-ui','Courier New', monospace; font-weight: 200;">Bombas:</label>
+                        <input type="number" id="bombs" name="bombs" min="1" value="5" required
+                            style="border-radius: 0.5rem; border-color: goldenrod; max-width: 2rem;">
+                    </div>
+                    <button type="submit"
+                        style="font-family: 'system-ui','Courier New', monospace; font-weight: 200; border-radius: 0.5rem; border-color: goldenrod;">Personalizar</button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Mostrar el tablero -->
+        <table border="1">
+            {{ table_html | safe }}
+        </table>
+    </div>
+    {% if session['game_over'] == False %}
+    <form method="POST" id="form-play" data-play="play" style="display: none;">
+        <input type="hidden" name="row" id="row">
+        <input type="hidden" name="col" id="col">
+        <button type="submit">Hacer Jugada</button>
+    </form>
+    {% endif %}
+
+    <h3 style="text-align: center;">Agradecimientos a los creadores de iconos</h3>
+
+    <div class="icon-container">
+        <a href="https://www.flaticon.es/iconos-gratis/bomba-atomica" title="Bomba atómica iconos">
+            <img src="https://cdn-icons-png.flaticon.com/128/7675/7675020.png" alt="Boom Icon">
+        </a>
+        <a href="https://www.flaticon.es/iconos-gratis/numero" title="Número iconos">
+            <img src="https://cdn-icons-png.flaticon.com/128/3570/3570098.png" alt="Numero 1">
+        </a>
+        <a href="https://www.flaticon.es/iconos-gratis/ninos" title="Niños iconos">
+            <img src="https://cdn-icons-png.flaticon.com/128/2880/2880484.png" alt="Numero 2">
+        </a>
+        <a href="https://www.flaticon.es/iconos-gratis/omega-3" title="Omega 3 iconos">
+            <img src="https://cdn-icons-png.flaticon.com/128/9957/9957062.png" alt="Numero 3">
+        </a>
+        <a href="https://www.flaticon.es/iconos-gratis/4" title="4 iconos">
+            <img src="https://cdn-icons-png.flaticon.com/128/4020/4020013.png" alt="Numero 4">
+        </a>
+        <a href="https://www.flaticon.es/iconos-gratis/5" title="5 iconos">
+            <img src="https://cdn-icons-png.flaticon.com/128/4020/4020014.png" alt="Numero 5">
+        </a>
+        <a href="https://www.flaticon.es/iconos-gratis/seis" title="Seis iconos">
+            <img src="https://cdn-icons-png.flaticon.com/128/6287/6287083.png" alt="Numero 6">
+        </a>
+        <a href="https://www.flaticon.es/iconos-gratis/7" title="7 iconos">
+            <img src="https://cdn-icons-png.flaticon.com/128/4020/4020016.png" alt="Numero 7">
+        </a>
+        <a href="https://www.flaticon.es/iconos-gratis/8" title="8 iconos">
+            <img src="https://res.cloudinary.com/dguhnftxe/image/upload/v1741509723/8_nafzli.png" alt="Numero 8">
+        </a>
+        <a href="https://www.flaticon.es/iconos-gratis/sustentabilidad" title="Sustentabilidad iconos">
+            <img src="https://cdn-icons-png.flaticon.com/128/1598/1598196.png" alt="Planta Icon">
+        </a>
+    </div>
+
+    <script src="/static/index.js"></script>
+</body>
+
+</html>
