@@ -1,7 +1,14 @@
+import os 
 from flask import Flask, render_template, request, session, jsonify
 from buscaminas.buscaminas import Buscaminas
 import secrets
-app = Flask(__name__)
+# app = Flask(__name__)
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+template_dir = os.path.join(BASE_DIR, "templates")
+static_dir = os.path.join(BASE_DIR, "static")
+buscaminas_dir = os.path.join(BASE_DIR, "buscaminas")
+app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 app.secret_key = secrets.token_hex(16) 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -17,12 +24,12 @@ def home():
     total_cells = rows*cols
     empty_cells = total_cells - bombs
     session['empty_cells'] = empty_cells
-    
     if 'matrix_booms' not in session:
         # Si no hay matrix, generar una nueva
         matrix_booms = buscaminas.numbers(rows, cols, bombs)
         session['matrix_booms'] = matrix_booms  # Guardar la matrix en la sesión
         session['game_over'] = False  # Inicializar state del juego
+        print(session)        
         total_cells = rows*cols
         empty_cells = total_cells - bombs
         session['empty_cells'] = empty_cells
@@ -33,7 +40,6 @@ def home():
         matrix_booms = session['matrix_booms']
         
     table_web = buscaminas.table_html(matrix_booms)
-    
     if 'game_over' not in session:
         session['game_over'] = False
         
